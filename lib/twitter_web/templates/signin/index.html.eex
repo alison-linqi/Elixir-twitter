@@ -1,0 +1,15 @@
+<div class=“row”>
+	<div class="col-md-9">
+		<div class="jumbotron">
+			<div class="page-header">
+				<h2>Welcome to Twitter Simulator</h2>
+			</div>
+			<div class="page-header">
+				<h2><small>Click to sign in or sign up.</small></h2>
+				<%= link "Sign In", to: Routes.signin_path(@conn, :login), class: "btn btn-info"%>
+				&nbsp
+				<%= link "Sign Up", to: Routes.signin_path(@conn, :new), class: "btn btn-info"%>
+			</div>
+		</div>
+	</div>
+</div>

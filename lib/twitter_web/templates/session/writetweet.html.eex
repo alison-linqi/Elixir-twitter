@@ -1,0 +1,4 @@
+<h3>Write New Tweet </h3>
+
+<%= render "form2.html", Map.put(assigns, :action, Routes.session_path(@conn, :sendtweet)) %> 
+

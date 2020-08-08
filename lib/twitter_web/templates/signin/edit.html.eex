@@ -1,0 +1,3 @@
+<h2>Set New Password</h2>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.signin_path(@conn, :update, @user)) %> 

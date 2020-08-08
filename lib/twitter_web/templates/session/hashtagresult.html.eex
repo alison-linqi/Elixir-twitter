@@ -1,0 +1,21 @@
+<h1>Results of #<%= @htname %></h1>
+
+<div class=“row”>
+	<div class="col-md-15">
+		<ul class="list-group">
+			<% result = Twitter.Client.query_hashtag(@htname) %>
+			<% IO.puts "following #{inspect result}" %>
+			<%= for n <- result do %>
+			<% writer = hd(n) |> Atom.to_string()
+			   n = Enum.chunk_every(n, 4)%>
+			<%= for m <- n do %>
+			<li class="list-group-item">
+				<%= "From: "<> writer %>
+				&nbsp&nbsp&nbsp
+				<%= Enum.at(m, 3)  %>
+			</li>
+			<% end  %>
+			<% end  %>
+		</ul>
+	</div>
+</div>

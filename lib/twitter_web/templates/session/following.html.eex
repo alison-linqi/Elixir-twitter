@@ -1,0 +1,4 @@
+<h3>New Follow </h3>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.session_path(@conn, :newfollowing)) %> 
+

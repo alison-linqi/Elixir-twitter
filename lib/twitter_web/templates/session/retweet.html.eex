@@ -1,0 +1,4 @@
+<h3>Retweet </h3>
+
+<%= render "formretweet.html", Map.put(assigns, :action, Routes.session_path(@conn, :sendretweet)) %> 
+

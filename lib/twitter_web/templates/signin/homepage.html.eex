@@ -1,0 +1,82 @@
+<h1><strong>Twitter Homepage</strong> </h1>
+<div>
+	Current user: <strong><%= @user.userid %></strong>
+</div>
+<br>
+<div class=“row”>
+	<div class="col-md-15">
+		Following List
+		<ul class="list-group">
+			<% sublist = Twitter.Client.get_subscribe_list(@user.userid |> String.to_atom()) %>
+			<% IO.puts "following #{inspect sublist}" %>
+			<%=
+			sublist = tl(sublist) 
+			for n <- sublist do %>
+			<li class="list-group-item">
+				<%= n |> Atom.to_string() %>
+			</li>
+			<%= end  %>
+		</ul>
+	</div>
+</div>
+
+<div class=“row”>
+	<div class="col-md-15">
+		Mention Me
+		<ul class="list-group">
+			<% mention = Twitter.Client.query_at_me(@user.userid) %>
+			<% IO.puts "following #{inspect mention}" %>
+			<%=
+			for n <- mention do %>
+			<li class="list-group-item">
+				<%= "From: " <> (hd(n) |> Atom.to_string()) %>
+				&nbsp&nbsp&nbsp
+				<%= Enum.at(n, 3) %>
+			</li>
+			<%= end  %>
+		</ul>
+	</div>
+</div>
+
+<br>
+<div>
+	<%=	link "New Following", to: Routes.session_path(@conn, :following, @user.id), class: "btn btn-primary"%>&nbsp&nbsp&nbsp
+
+	<%=	link "Write Tweet", to: Routes.session_path(@conn, :writetweet, @user.id), class: "btn btn-primary"%>&nbsp&nbsp&nbsp
+
+	<%=	link "Retweet", to: Routes.session_path(@conn, :retweet), class: "btn btn-primary"%>&nbsp&nbsp&nbsp
+
+	<%=	link "Search Hashtag", to: Routes.session_path(@conn, :hashtag), class: "btn btn-primary"%>&nbsp&nbsp&nbsp
+
+	<%= link "Change Password", to: Routes.signin_path(@conn, :edit, @user.id), class: "btn btn-info"%>&nbsp&nbsp&nbsp
+
+	<%= link "Delete Account", to: Routes.signin_path(@conn, :delete, @user), method: :delete, data: [confirm: "Do you want to delete your account?"], class: "btn btn-danger"%>
+</div>
+
+
+<br>
+<div class=“row”>
+	<div class="col-md-15">
+		Tweets
+		<ul class="list-group">
+			<% tweets = Twitter.Client.query_subscribe_tweets(@user.userid) %>
+			<% IO.puts "!!!! #{inspect tweets}" %>
+			<%= for tweet <- tweets do %>
+			<% [writer | twts] = tweet %>
+			<%= for twt <- twts do %>
+			<li class="list-group-item">
+				<%= "From:  " <> Atom.to_string(writer) <> " " %> &nbsp&nbsp&nbsp <%= Enum.at(twt, 2) %>
+			</li>
+			<%= end  %>
+			<%= end  %>
+			<% tweets = Twitter.Client.query_my_tweets(@user.userid) %>
+			<% IO.puts "!!!! #{inspect @user.userid}" %>
+			<%= tweets = tl(tweets)
+			   for tweet <- tweets do %>
+			<li class="list-group-item">
+				<%= "From:  " <> @user.userid <> " "%> &nbsp&nbsp&nbsp <%= Enum.at(tweet, 2)%></td>
+			</li>
+			<%= end %>
+		</ul>
+	</div>
+</div>

@@ -1,6 +1,3 @@
-Jingfan Wang (UFID 5191-0196)
-Lin Qi(UFID 7064-7133)
-
 How to run the tests:
 To start your Phoenix server:
 
